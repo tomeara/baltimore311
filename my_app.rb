@@ -2,11 +2,13 @@ require 'rubygems'
 require 'twitter'
 require 'lib/post.rb'
 
-search = Twitter::Search.new
 @prev_id = 0
 loop do
-  sleep(5)
+  sleep(1)
+  search = Twitter::Search.new
   search.to("balt311").result_type("recent").per_page(1).each do |r|
+      
+      puts "#{r.id} - #{@prev_id}"
       if(r.id > @prev_id)
         @detail = r.text
         @timestamp = Time.now.strftime("%Y-%m-%d %I:%M:%S %p")
@@ -40,5 +42,4 @@ loop do
         @prev_id = r.id
       end
   end
-  puts "continues..."
 end
